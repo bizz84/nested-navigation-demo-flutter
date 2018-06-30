@@ -1,56 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:nested_navigation_demo_flutter/bottom_navigation.dart';
+import 'package:nested_navigation_demo_flutter/detail_page.dart';
+import 'package:nested_navigation_demo_flutter/master_page.dart';
 
-class MasterPage extends StatelessWidget {
-  MasterPage({this.color, this.onPush});
-  final Color color;
-  final VoidCallback onPush;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: color,
-      alignment: Alignment.center,
-      child: FlatButton(
-        child: Text(
-          'PUSH',
-          style: TextStyle(fontSize: 32.0, color: Colors.white),
-        ),
-        onPressed: onPush,
-      ),
-    );
-  }
-}
-
-class DetailPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-
-    return Scaffold(
-      appBar: AppBar(
-
-      ),
-      body: Container(
-        color: Theme.of(context).primaryColor,
-      ),
-    );
-  }
+class AppNavigationState {
+  TabNavigators navigators = TabNavigators();
+  TabItem currentTab = TabItem.red;
 }
 
 class TabNavigators {
-
-  final redNavigatorKey = GlobalKey<NavigatorState>();
-  final greenNavigatorKey = GlobalKey<NavigatorState>();
-  final blueNavigatorKey = GlobalKey<NavigatorState>();
+  final _redNavigatorKey = GlobalKey<NavigatorState>();
+  final _greenNavigatorKey = GlobalKey<NavigatorState>();
+  final _blueNavigatorKey = GlobalKey<NavigatorState>();
 
   GlobalKey<NavigatorState> navigator({TabItem tabItem}) {
     switch (tabItem) {
       case TabItem.red:
-        return redNavigatorKey;
+        return _redNavigatorKey;
       case TabItem.green:
-        return greenNavigatorKey;
+        return _greenNavigatorKey;
       case TabItem.blue:
-        return blueNavigatorKey;
+        return _blueNavigatorKey;
     }
     return null;
   }
@@ -62,7 +32,6 @@ class App extends StatefulWidget {
 }
 
 class AppState extends State<App> {
-
   TabItem currentTab = TabItem.red;
   TabNavigators navigators = TabNavigators();
 
@@ -73,7 +42,8 @@ class AppState extends State<App> {
   }
 
   void _push() {
-    NavigatorState navigatorState = navigators.navigator(tabItem: currentTab).currentState;
+    NavigatorState navigatorState =
+        navigators.navigator(tabItem: currentTab).currentState;
     navigatorState.push(MaterialPageRoute<void>(
       builder: (BuildContext context) {
         return DetailPage();
@@ -98,17 +68,10 @@ class AppState extends State<App> {
       theme: ThemeData(
         primarySwatch: TabHelper.color(currentTab),
       ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            TabHelper.description(currentTab),
-          ),
-          backgroundColor: TabHelper.color(currentTab),
-        ),
-        body: MasterPage(
-          color: TabHelper.color(currentTab),
-          onPush: _push,
-        )
+      home: MasterPage(
+        color: TabHelper.color(currentTab),
+        title: TabHelper.description(currentTab),
+        onPush: _push,
       ),
     );
   }
