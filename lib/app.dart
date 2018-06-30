@@ -44,11 +44,7 @@ class AppState extends State<App> {
   void _push() {
     NavigatorState navigatorState =
         navigators.navigator(tabItem: currentTab).currentState;
-    navigatorState.push(MaterialPageRoute<void>(
-      builder: (BuildContext context) {
-        return DetailPage();
-      },
-    ));
+    navigatorState.pushNamed("/detail");
   }
 
   @override
@@ -68,11 +64,15 @@ class AppState extends State<App> {
       theme: ThemeData(
         primarySwatch: TabHelper.color(currentTab),
       ),
-      home: MasterPage(
-        color: TabHelper.color(currentTab),
-        title: TabHelper.description(currentTab),
-        onPush: _push,
-      ),
+      initialRoute: "/",
+      routes: {
+        "/" : (context) => MasterPage(
+          color: TabHelper.color(currentTab),
+          title: TabHelper.description(currentTab),
+          onPush: _push,
+        ),
+        "/detail" : (context) => DetailPage(),
+      },
     );
   }
 }
