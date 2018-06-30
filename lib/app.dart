@@ -1,6 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:nested_navigation_demo_flutter/bottom_navigation.dart';
 
+class MasterPage extends StatelessWidget {
+  MasterPage({this.color, this.onPush});
+  final Color color;
+  final VoidCallback onPush;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: color,
+      alignment: Alignment.center,
+      child: FlatButton(
+        child: Text(
+          'PUSH',
+          style: TextStyle(fontSize: 32.0, color: Colors.white),
+        ),
+        onPressed: onPush,
+      ),
+    );
+  }
+}
 
 class DetailPage extends StatelessWidget {
   @override
@@ -46,13 +66,13 @@ class AppState extends State<App> {
   TabItem currentTab = TabItem.red;
   TabNavigators navigators = TabNavigators();
 
-  _selectTab(TabItem tabItem) {
+  void _selectTab(TabItem tabItem) {
     setState(() {
       currentTab = tabItem;
     });
   }
 
-  _push() {
+  void _push() {
     NavigatorState navigatorState = navigators.navigator(tabItem: currentTab).currentState;
     navigatorState.push(MaterialPageRoute<void>(
       builder: (BuildContext context) {
@@ -85,17 +105,10 @@ class AppState extends State<App> {
           ),
           backgroundColor: TabHelper.color(currentTab),
         ),
-        body: Container(
+        body: MasterPage(
           color: TabHelper.color(currentTab),
-          alignment: Alignment.center,
-          child: FlatButton(
-            child: Text(
-              'PUSH',
-              style: TextStyle(fontSize: 32.0, color: Colors.white),
-            ),
-            onPressed: _push,
-          ),
-        ),
+          onPush: _push,
+        )
       ),
     );
   }
