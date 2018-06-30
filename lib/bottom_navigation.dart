@@ -20,7 +20,7 @@ class TabHelper {
     return TabItem.red;
   }
 
-  static String description({TabItem tabItem}) {
+  static String description(TabItem tabItem) {
     switch (tabItem) {
       case TabItem.red:
         return 'red';
@@ -31,11 +31,11 @@ class TabHelper {
     }
     return '';
   }
-  static IconData icon({TabItem tabItem}) {
+  static IconData icon(TabItem tabItem) {
     return Icons.layers;
   }
 
-  static MaterialColor color({TabItem tabItem}) {
+  static MaterialColor color(TabItem tabItem) {
     switch (tabItem) {
       case TabItem.red:
         return Colors.red;
@@ -71,8 +71,8 @@ class BottomNavigation extends StatelessWidget {
 
   BottomNavigationBarItem _buildItem({TabItem tabItem}) {
 
-    String text = TabHelper.description(tabItem: tabItem);
-    IconData icon = TabHelper.icon(tabItem: tabItem);
+    String text = TabHelper.description(tabItem);
+    IconData icon = TabHelper.icon(tabItem);
     return BottomNavigationBarItem(
       icon: Icon(
         icon,
@@ -88,6 +88,6 @@ class BottomNavigation extends StatelessWidget {
   }
 
   Color _colorTabMatching({TabItem item}) {
-    return currentTab == item ? TabHelper.color(tabItem: item) : Colors.grey;
+    return currentTab == item ? TabHelper.color(item) : Colors.grey;
   }
 }

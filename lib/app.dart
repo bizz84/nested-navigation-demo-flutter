@@ -27,8 +27,16 @@ class AppState extends State<App> {
   }
 
   Widget _buildBody() {
-    return Container(
-      color: TabHelper.color(tabItem: currentTab),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          TabHelper.description(currentTab),
+        ),
+        backgroundColor: TabHelper.color(currentTab),
+      ),
+      body: Container(
+        color: TabHelper.color(currentTab),
+      ),
     );
   }
 }
