@@ -39,6 +39,8 @@ flutter:   https://github.com/flutter/flutter/issues/new
 
 Debugging this reveals that the `observer.navigator` is an instance of `HeroController`.
 
+Further investigation reveals that with some tweaks it may be possible to use [WidgetsApp](https://docs.flutter.io/flutter/widgets/WidgetsApp-class.html) instead of `MaterialApp` (as this doesn't have a `HeroController`), however with this sample app we encounter other exceptions and it seems dubvious that this is the way to go.
+
 **Question**: How to keep track of the navigation state of multiple Navigators within a `BottomNavigationBar`?
 
 
