@@ -2,14 +2,15 @@
 
 This sample app shows how to use separate navigators for each tab in a [BottomNavigationBar](https://docs.flutter.io/flutter/material/BottomNavigationBar-class.html).
 
-[](screenshots/green-root.png)
-[](screenshots/green-detail.png)
+![](screenshots/green-root.png)
 
-**This project is Work In Progress and is open sourced to highlight a potential issue with [NavigationObserver](https://docs.flutter.io/flutter/widgets/NavigatorObserver-class.html)**.
+![](screenshots/green-detail.png)
+
+**NOTE**: This project is Work In Progress and is open sourced to highlight a potential issue with [NavigationObserver](https://docs.flutter.io/flutter/widgets/NavigatorObserver-class.html).
 
 ## Problem statement
 
-**Enable state restoration for navigation/routes within different Navigators inside a `BottomNavigationBar`. This is a common use case for a lot of apps.**
+**Enable state restoration of multiple navigation stacks inside a `BottomNavigationBar`. This is a common use case for a lot of apps.**
 
 ## Details
 
@@ -38,7 +39,7 @@ flutter:   https://github.com/flutter/flutter/issues/new
 
 Debugging this reveals that the `observer.navigator` is an instance of `HeroController`.
 
-**Question**: How is it possible to keep track of the navigation state of multiple Navigators within a `BottomNavigationBar`?
+**Question**: How to keep track of the navigation state of multiple Navigators within a `BottomNavigationBar`?
 
 
 ### [License: MIT](LICENSE.md)
