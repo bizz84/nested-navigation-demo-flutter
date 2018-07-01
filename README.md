@@ -39,9 +39,26 @@ flutter:   https://github.com/flutter/flutter/issues/new
 
 Debugging this reveals that the `observer.navigator` is an instance of `HeroController`.
 
-Further investigation reveals that with some tweaks it may be possible to use [WidgetsApp](https://docs.flutter.io/flutter/widgets/WidgetsApp-class.html) instead of `MaterialApp` (as this doesn't have a `HeroController`), however with this sample app we encounter other exceptions and it seems dubvious that this is the way to go.
+#### WidgetsApp
 
-**Question**: How to keep track of the navigation state of multiple Navigators within a `BottomNavigationBar`?
+Further investigation reveals that with some tweaks it may be possible to use [WidgetsApp](https://docs.flutter.io/flutter/widgets/WidgetsApp-class.html) instead of `MaterialApp` (`WidgetsApp` doesn't have a `HeroController`), but it seems dubious that this is the way to go. In any case, when trying to push a route with `WidgetsApp` we encounter another exception:
+
+```
+flutter: ══╡ EXCEPTION CAUGHT BY WIDGETS LIBRARY ╞═══════════════════════════════════════════════════════════
+flutter: The following NoSuchMethodError was thrown building BackButton(dirty):
+flutter: The getter 'backButtonTooltip' was called on null.
+flutter: Receiver: null
+flutter: Tried calling: backButtonTooltip
+flutter:
+flutter: When the exception was thrown, this was the stack:
+flutter: #0      Object.noSuchMethod (dart:core/runtime/libobject_patch.dart:46:5)
+flutter: #1      BackButton.build (package:flutter/src/material/back_button.dart:87:50)
+```
+
+## Summary / Questions
+
+* How to keep track of the navigation state of multiple Navigators within a `BottomNavigationBar`?
+* Is there an alternative to `BottomNavigationBar`, which allows to use multiple navigation stacks and presere the state?
 
 
 ### [License: MIT](LICENSE.md)
