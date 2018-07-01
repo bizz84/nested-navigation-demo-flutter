@@ -39,6 +39,13 @@ flutter:   https://github.com/flutter/flutter/issues/new
 
 Debugging this reveals that the `observer.navigator` is an instance of `HeroController`.
 
+#### Reproduction steps
+
+1. Checkout the [exception-navigation-observer](https://github.com/bizz84/nested-navigation-demo-flutter/tree/exception-navigation-observer) branch.
+2. Run the app
+3. Tap on the `green` or `blue` tab at the bottom.
+4. Exception: `'observer.navigator == null': is not true.`
+
 #### WidgetsApp
 
 Further investigation reveals that with some tweaks it may be possible to use [WidgetsApp](https://docs.flutter.io/flutter/widgets/WidgetsApp-class.html) instead of `MaterialApp` (`WidgetsApp` doesn't have a `HeroController`), but it seems dubious that this is the way to go. In any case, when trying to push a route with `WidgetsApp` we encounter another exception (see [exception-WidgetsApp branch](https://github.com/bizz84/nested-navigation-demo-flutter/tree/exception-WidgetsApp)):
@@ -56,6 +63,7 @@ flutter: #1      BackButton.build (package:flutter/src/material/back_button.dart
 ```
 
 ## Summary / Questions
+
 
 * How to keep track of the navigation state of multiple Navigators within a `BottomNavigationBar`?
 * Is there an alternative to `BottomNavigationBar`, which allows to use multiple navigation stacks and preserve their state?
