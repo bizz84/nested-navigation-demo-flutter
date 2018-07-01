@@ -1,29 +1,31 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:nested_navigation_demo_flutter/bottom_navigation.dart';
 import 'package:nested_navigation_demo_flutter/detail_page.dart';
 import 'package:nested_navigation_demo_flutter/master_page.dart';
+
+class AppRoutes {
+  static const String root = '/';
+  static const String detail = '/detail';
+}
+
+class RouteState {
+  RouteState({this.name: AppRoutes.root});
+  String name;
+  final navigatorKey = GlobalKey<NavigatorState>();
+}
 
 class App extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => AppState();
 }
 
-class RouteState {
-  RouteState({this.name});
-  String name;
-  final navigatorKey = GlobalKey<NavigatorState>();
-}
-
 class AppState extends State<App> {
-  static final String rootRoute = '/';
-  static final String detailRoute = '/detail';
 
   TabItem currentTab = TabItem.red;
   Map<TabItem, RouteState> routes = {
-    TabItem.red: RouteState(name: rootRoute),
-    TabItem.green: RouteState(name: rootRoute),
-    TabItem.blue: RouteState(name: rootRoute),
+    TabItem.red: RouteState(),
+    TabItem.green: RouteState(),
+    TabItem.blue: RouteState(),
   };
 
   void _selectTab(TabItem tabItem) {
@@ -33,55 +35,39 @@ class AppState extends State<App> {
   }
 
   void _push() async {
-    routes[currentTab].name = detailRoute;
-    await routes[currentTab].navigatorKey.currentState.pushNamed(detailRoute);
-    routes[currentTab].name = rootRoute;
-    print('pop');
+    print('push ${TabHelper.description(currentTab)}');
+    routes[currentTab].name = AppRoutes.detail;
+    await routes[currentTab].navigatorKey.currentState.pushNamed(AppRoutes.detail);
+    routes[currentTab].name = AppRoutes.root;
+    print('pop ${TabHelper.description(currentTab)}');
   }
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: TabRootNavigation(
-        currentTab: currentTab,
-        initialRoute: routes[currentTab].name,
-        navigatorKey: routes[currentTab].navigatorKey,
-        onPush: _push,
-      ),
+      body: _buildBody(),
       bottomNavigationBar: BottomNavigation(
         currentTab: currentTab,
         onSelectTab: _selectTab,
       ),
     );
   }
-}
 
-class TabRootNavigation extends StatelessWidget {
-  TabRootNavigation({this.currentTab, this.initialRoute, this.navigatorKey, this.onPush});
-  final TabItem currentTab;
-  final String initialRoute;
-  final GlobalKey<NavigatorState> navigatorKey;
-  final VoidCallback onPush;
-
-  static final String rootRoute = '/';
-  static final String detailRoute = '/detail';
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _buildBody() {
     return MaterialApp(
-      navigatorKey: navigatorKey,
+      navigatorKey: routes[currentTab].navigatorKey,
       theme: ThemeData(
         primarySwatch: TabHelper.color(currentTab),
       ),
-      initialRoute: initialRoute,
+      initialRoute: routes[currentTab].name,
       routes: {
-        rootRoute: (context) => MasterPage(
-              color: TabHelper.color(currentTab),
-              title: TabHelper.description(currentTab),
-              onPush: onPush,
-            ),
-        detailRoute: (context) => DetailPage(),
+        AppRoutes.root: (context) => MasterPage(
+          color: TabHelper.color(currentTab),
+          title: TabHelper.description(currentTab),
+          onPush: _push,
+        ),
+        AppRoutes.detail: (context) => DetailPage(),
       },
     );
   }
