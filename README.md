@@ -2,6 +2,9 @@
 
 This sample app shows how to use separate navigators for each tab in a [BottomNavigationBar](https://docs.flutter.io/flutter/material/BottomNavigationBar-class.html).
 
+[](screenshots/green-root.png)
+[](screenshots/green-detail.png)
+
 **This project is Work In Progress and is open sourced to highlight a potential issue with [NavigationObserver](https://docs.flutter.io/flutter/widgets/NavigatorObserver-class.html)**.
 
 ## Problem statement
