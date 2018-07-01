@@ -19,7 +19,7 @@ class App extends StatefulWidget {
   State<StatefulWidget> createState() => AppState();
 }
 
-class AppState extends State<App> {
+class AppState extends State<App> with NavigatorObserver {
 
   TabItem currentTab = TabItem.red;
   Map<TabItem, RouteState> routes = {
@@ -55,20 +55,37 @@ class AppState extends State<App> {
   }
 
   Widget _buildBody() {
-    return MaterialApp(
-      navigatorKey: routes[currentTab].navigatorKey,
-      theme: ThemeData(
-        primarySwatch: TabHelper.color(currentTab),
-      ),
-      initialRoute: routes[currentTab].name,
-      routes: {
-        AppRoutes.root: (context) => MasterPage(
+
+    final routeFactories = {
+      AppRoutes.root: () => MaterialPageRoute(
+        builder: (context) => MasterPage(
           color: TabHelper.color(currentTab),
           title: TabHelper.description(currentTab),
           onPush: _push,
         ),
-        AppRoutes.detail: (context) => DetailPage(),
-      },
+      ),
+      AppRoutes.detail: () => MaterialPageRoute(
+        builder: (context) => DetailPage(),
+      ),
+    };
+
+    return WidgetsApp(
+      color: TabHelper.color(currentTab),
+//      theme: ThemeData(
+//        primarySwatch: TabHelper.color(currentTab),
+//      ),
+      navigatorKey: routes[currentTab].navigatorKey,
+      navigatorObservers: [ this ],
+      initialRoute: routes[currentTab].name,
+      onGenerateRoute: (route) => routeFactories[route.name](),
+//      routes: {
+//        AppRoutes.root: (context) => MasterPage(
+//          color: TabHelper.color(currentTab),
+//          title: TabHelper.description(currentTab),
+//          onPush: _push,
+//        ),
+//        AppRoutes.detail: (context) => DetailPage(),
+//      },
     );
   }
 }
