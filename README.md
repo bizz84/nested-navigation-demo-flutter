@@ -20,7 +20,7 @@ This sample app shows how to use separate navigators for each tab in a [BottomNa
 * This solves only half of the problem though, as a new navigation stack is created when switching tabs.
 * Some state restoration logic alleviates this problem by keeping track of the desired `initialRoute` for each tab as routes are pushed and popped.
 * In order to reliably track this, it should be possible to register a `NavigatorObserver` when creating the `MaterialApp`, and override the `didPush` / `didPop` methods to keep track of state.
-* Unfortunately, registering a `NavigatorObserver` causes an exception when switching tabs:
+* Unfortunately, registering a `NavigatorObserver` causes an exception when switching tabs (see [exception-navigation-observer branch](https://github.com/bizz84/nested-navigation-demo-flutter/tree/exception-navigation-observer)):
 
 ```
 flutter: ══╡ EXCEPTION CAUGHT BY WIDGETS LIBRARY ╞═══════════════════════════════════════════════════════════
@@ -41,7 +41,7 @@ Debugging this reveals that the `observer.navigator` is an instance of `HeroCont
 
 #### WidgetsApp
 
-Further investigation reveals that with some tweaks it may be possible to use [WidgetsApp](https://docs.flutter.io/flutter/widgets/WidgetsApp-class.html) instead of `MaterialApp` (`WidgetsApp` doesn't have a `HeroController`), but it seems dubious that this is the way to go. In any case, when trying to push a route with `WidgetsApp` we encounter another exception:
+Further investigation reveals that with some tweaks it may be possible to use [WidgetsApp](https://docs.flutter.io/flutter/widgets/WidgetsApp-class.html) instead of `MaterialApp` (`WidgetsApp` doesn't have a `HeroController`), but it seems dubious that this is the way to go. In any case, when trying to push a route with `WidgetsApp` we encounter another exception (see [exception-WidgetsApp branch](https://github.com/bizz84/nested-navigation-demo-flutter/tree/exception-WidgetsApp)):
 
 ```
 flutter: ══╡ EXCEPTION CAUGHT BY WIDGETS LIBRARY ╞═══════════════════════════════════════════════════════════
