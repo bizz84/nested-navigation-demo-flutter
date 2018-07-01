@@ -58,7 +58,7 @@ flutter: #1      BackButton.build (package:flutter/src/material/back_button.dart
 ## Summary / Questions
 
 * How to keep track of the navigation state of multiple Navigators within a `BottomNavigationBar`?
-* Is there an alternative to `BottomNavigationBar`, which allows to use multiple navigation stacks and presere the state?
+* Is there an alternative to `BottomNavigationBar`, which allows to use multiple navigation stacks and preserve their state?
 
 
 ### [License: MIT](LICENSE.md)
