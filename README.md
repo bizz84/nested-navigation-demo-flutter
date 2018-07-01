@@ -6,7 +6,7 @@ This sample app shows how to use separate navigators for each tab in a [BottomNa
 
 ![](screenshots/green-detail.png)
 
-**NOTE**: This project is Work In Progress and is open sourced to highlight a potential issue with [NavigationObserver](https://docs.flutter.io/flutter/widgets/NavigatorObserver-class.html).
+**NOTE**: This project is Work In Progress and is open sourced to highlight a potential issue with [NavigatorfObserver](https://docs.flutter.io/flutter/widgets/NavigatorObserver-class.html).
 
 ## Problem statement
 
@@ -19,8 +19,8 @@ This sample app shows how to use separate navigators for each tab in a [BottomNa
 * This can be done in Flutter by using a `MaterialApp` as the `body` of the `BottomNavigationBar`, and configuring it with a separate global `navigationKey` for each tab.
 * This solves only half of the problem though, as a new navigation stack is created when switching tabs.
 * Some state restoration logic alleviates this problem by keeping track of the desired `initialRoute` for each tab as routes are pushed and popped.
-* In order to reliably track this, it should be possible to register a `NavigationObserver` when creating the `MaterialApp`, and override the `didPush` / `didPop` methods to keep track of state.
-* Unfortunately, registering a `NavigationObserver` causes an exception when switching tabs:
+* In order to reliably track this, it should be possible to register a `NavigatorObserver` when creating the `MaterialApp`, and override the `didPush` / `didPop` methods to keep track of state.
+* Unfortunately, registering a `NavigatorObserver` causes an exception when switching tabs:
 
 ```
 flutter: ══╡ EXCEPTION CAUGHT BY WIDGETS LIBRARY ╞═══════════════════════════════════════════════════════════
