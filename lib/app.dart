@@ -19,7 +19,7 @@ class App extends StatefulWidget {
   State<StatefulWidget> createState() => AppState();
 }
 
-class AppState extends State<App> {
+class AppState extends State<App> with NavigatorObserver {
 
   TabItem currentTab = TabItem.red;
   Map<TabItem, RouteState> routes = {
@@ -57,6 +57,7 @@ class AppState extends State<App> {
   Widget _buildBody() {
     return MaterialApp(
       navigatorKey: routes[currentTab].navigatorKey,
+      navigatorObservers: [ this ],
       theme: ThemeData(
         primarySwatch: TabHelper.color(currentTab),
       ),
