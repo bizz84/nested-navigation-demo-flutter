@@ -1,11 +1,7 @@
 
 import 'package:flutter/material.dart';
 
-enum TabItem {
-  red,
-  green,
-  blue,
-}
+enum TabItem { red, green, blue }
 
 class TabHelper {
   static TabItem item({int index}) {

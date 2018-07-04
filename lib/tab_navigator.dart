@@ -1,8 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:nested_navigation_demo_flutter/bottom_navigation.dart';
-import 'package:nested_navigation_demo_flutter/detail_page.dart';
-import 'package:nested_navigation_demo_flutter/master_page.dart';
+import 'package:nested_navigation_demo_flutter/color_detail_page.dart';
+import 'package:nested_navigation_demo_flutter/colors_list_page.dart';
 
 class TabNavigatorRoutes {
   static const String root = '/';
@@ -14,8 +14,8 @@ class TabNavigator extends StatelessWidget {
   final GlobalKey<NavigatorState> navigatorKey;
   final TabItem tabItem;
 
-  void _push(BuildContext context) {
-    var routeBuilders = _routeBuilders(context);
+  void _push(BuildContext context, {int materialIndex: 500}) {
+    var routeBuilders = _routeBuilders(context, materialIndex: materialIndex);
 
     Navigator.push(
         context,
@@ -25,16 +25,17 @@ class TabNavigator extends StatelessWidget {
     );
   }
 
-  Map<String, WidgetBuilder> _routeBuilders(BuildContext context) {
+  Map<String, WidgetBuilder> _routeBuilders(BuildContext context, {int materialIndex: 500}) {
     return {
-      TabNavigatorRoutes.root: (context) => MasterPage(
+      TabNavigatorRoutes.root: (context) => ColorsListPage(
         color: TabHelper.color(tabItem),
         title: TabHelper.description(tabItem),
-        onPush: () => _push(context),
+        onPush: (materialIndex) => _push(context, materialIndex: materialIndex),
       ),
-      TabNavigatorRoutes.detail: (context) => DetailPage(
+      TabNavigatorRoutes.detail: (context) => ColorDetailPage(
         color: TabHelper.color(tabItem),
         title: TabHelper.description(tabItem),
+        materialIndex: materialIndex,
       ),
     };
   }

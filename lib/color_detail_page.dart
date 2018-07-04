@@ -2,10 +2,11 @@
 
 import 'package:flutter/material.dart';
 
-class DetailPage extends StatelessWidget {
-  DetailPage({this.color, this.title});
-  final Color color;
+class ColorDetailPage extends StatelessWidget {
+  ColorDetailPage({this.color, this.title, this.materialIndex: 500});
+  final MaterialColor color;
   final String title;
+  final int materialIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -14,11 +15,11 @@ class DetailPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: color,
         title: Text(
-          title,
+          '$title[$materialIndex]',
         ),
       ),
       body: Container(
-        color: color, // Theme.of(context).primaryColor
+        color: color[materialIndex],
       ),
     );
   }
