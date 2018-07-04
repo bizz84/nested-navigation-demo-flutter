@@ -1,18 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nested_navigation_demo_flutter/bottom_navigation.dart';
-import 'package:nested_navigation_demo_flutter/detail_page.dart';
-import 'package:nested_navigation_demo_flutter/master_page.dart';
-
-class AppRoutes {
-  static const String root = '/';
-  static const String detail = '/detail';
-}
-
-class RouteState {
-  RouteState({this.name: AppRoutes.root});
-  String name;
-  final navigatorKey = GlobalKey<NavigatorState>();
-}
+import 'package:nested_navigation_demo_flutter/tab_navigator.dart';
 
 class App extends StatefulWidget {
   @override
@@ -22,10 +10,10 @@ class App extends StatefulWidget {
 class AppState extends State<App> {
 
   TabItem currentTab = TabItem.red;
-  Map<TabItem, RouteState> routes = {
-    TabItem.red: RouteState(),
-    TabItem.green: RouteState(),
-    TabItem.blue: RouteState(),
+  Map<TabItem, GlobalKey<NavigatorState>> navigatorKeys = {
+    TabItem.red: GlobalKey<NavigatorState>(),
+    TabItem.green: GlobalKey<NavigatorState>(),
+    TabItem.blue: GlobalKey<NavigatorState>(),
   };
 
   void _selectTab(TabItem tabItem) {
@@ -34,19 +22,14 @@ class AppState extends State<App> {
     });
   }
 
-  void _push() async {
-    print('push ${TabHelper.description(currentTab)}');
-    routes[currentTab].name = AppRoutes.detail;
-    await routes[currentTab].navigatorKey.currentState.pushNamed(AppRoutes.detail);
-    routes[currentTab].name = AppRoutes.root;
-    print('pop ${TabHelper.description(currentTab)}');
-  }
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _buildBody(),
+      body: Stack(children: <Widget>[
+        _buildOffstageNavigator(TabItem.red),
+        _buildOffstageNavigator(TabItem.green),
+        _buildOffstageNavigator(TabItem.blue),
+      ]),
       bottomNavigationBar: BottomNavigation(
         currentTab: currentTab,
         onSelectTab: _selectTab,
@@ -54,21 +37,13 @@ class AppState extends State<App> {
     );
   }
 
-  Widget _buildBody() {
-    return MaterialApp(
-      navigatorKey: routes[currentTab].navigatorKey,
-      theme: ThemeData(
-        primarySwatch: TabHelper.color(currentTab),
+  Widget _buildOffstageNavigator(TabItem tabItem) {
+    return Offstage(
+      offstage: currentTab != tabItem,
+      child: TabNavigator(
+        navigatorKey: navigatorKeys[tabItem],
+        tabItem: tabItem,
       ),
-      initialRoute: routes[currentTab].name,
-      routes: {
-        AppRoutes.root: (context) => MasterPage(
-          color: TabHelper.color(currentTab),
-          title: TabHelper.description(currentTab),
-          onPush: _push,
-        ),
-        AppRoutes.detail: (context) => DetailPage(),
-      },
     );
   }
 }
