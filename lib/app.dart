@@ -8,7 +8,6 @@ class App extends StatefulWidget {
 }
 
 class AppState extends State<App> {
-
   TabItem currentTab = TabItem.red;
   Map<TabItem, GlobalKey<NavigatorState>> navigatorKeys = {
     TabItem.red: GlobalKey<NavigatorState>(),
@@ -24,15 +23,19 @@ class AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(children: <Widget>[
-        _buildOffstageNavigator(TabItem.red),
-        _buildOffstageNavigator(TabItem.green),
-        _buildOffstageNavigator(TabItem.blue),
-      ]),
-      bottomNavigationBar: BottomNavigation(
-        currentTab: currentTab,
-        onSelectTab: _selectTab,
+    return WillPopScope(
+      onWillPop: () async =>
+          !await navigatorKeys[currentTab].currentState.maybePop(),
+      child: Scaffold(
+        body: Stack(children: <Widget>[
+          _buildOffstageNavigator(TabItem.red),
+          _buildOffstageNavigator(TabItem.green),
+          _buildOffstageNavigator(TabItem.blue),
+        ]),
+        bottomNavigationBar: BottomNavigation(
+          currentTab: currentTab,
+          onSelectTab: _selectTab,
+        ),
       ),
     );
   }
