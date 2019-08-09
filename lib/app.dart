@@ -9,6 +9,7 @@ class App extends StatefulWidget {
 
 class AppState extends State<App> {
   TabItem currentTab = TabItem.red;
+  int selectedIndex = TabItem.red.index;
   Map<TabItem, GlobalKey<NavigatorState>> navigatorKeys = {
     TabItem.red: GlobalKey<NavigatorState>(),
     TabItem.green: GlobalKey<NavigatorState>(),
@@ -18,6 +19,7 @@ class AppState extends State<App> {
   void _selectTab(TabItem tabItem) {
     setState(() {
       currentTab = tabItem;
+      selectedIndex = tabItem.index;
     });
   }
 
@@ -35,6 +37,7 @@ class AppState extends State<App> {
         bottomNavigationBar: BottomNavigation(
           currentTab: currentTab,
           onSelectTab: _selectTab,
+          selectedIndex: selectedIndex,
         ),
       ),
     );

@@ -45,8 +45,9 @@ class TabHelper {
 }
 
 class BottomNavigation extends StatelessWidget {
-  BottomNavigation({this.currentTab, this.onSelectTab});
+  BottomNavigation({this.currentTab, this.onSelectTab, this.selectedIndex});
   final TabItem currentTab;
+  final int selectedIndex;
   final ValueChanged<TabItem> onSelectTab;
 
 
@@ -62,6 +63,7 @@ class BottomNavigation extends StatelessWidget {
       onTap: (index) => onSelectTab(
         TabHelper.item(index: index),
       ),
+      currentIndex: selectedIndex,
     );
   }
 
