@@ -36,8 +36,8 @@ class AppState extends State<App> {
             return false;
           }
         }
-        // let system handle back button and leave app
-        return true;
+        // let system handle back button if we're on the first route
+        return isFirstRouteInCurrentTab;
       },
       child: Scaffold(
         body: Stack(children: <Widget>[
