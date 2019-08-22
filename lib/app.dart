@@ -24,8 +24,21 @@ class AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async =>
-          !await navigatorKeys[currentTab].currentState.maybePop(),
+      onWillPop: () async {
+        final isFirstRouteInCurrentTab =
+            !await navigatorKeys[currentTab].currentState.maybePop();
+        if (isFirstRouteInCurrentTab) {
+          // if not on the 'main' tab
+          if (currentTab != TabItem.red) {
+            // select 'main' tab
+            _selectTab(TabItem.red);
+            // back button handled by app
+            return false;
+          }
+        }
+        // let system handle back button and leave app
+        return true;
+      },
       child: Scaffold(
         body: Stack(children: <Widget>[
           _buildOffstageNavigator(TabItem.red),
