@@ -8,17 +8,20 @@ class App extends StatefulWidget {
 }
 
 class AppState extends State<App> {
-  TabItem currentTab = TabItem.red;
-  Map<TabItem, GlobalKey<NavigatorState>> navigatorKeys = {
+  TabItem _currentTab = TabItem.red;
+  Map<TabItem, GlobalKey<NavigatorState>> _navigatorKeys = {
     TabItem.red: GlobalKey<NavigatorState>(),
     TabItem.green: GlobalKey<NavigatorState>(),
     TabItem.blue: GlobalKey<NavigatorState>(),
   };
 
   void _selectTab(TabItem tabItem) {
-    setState(() {
-      currentTab = tabItem;
-    });
+    if (tabItem == _currentTab) {
+      // pop to first route
+      _navigatorKeys[tabItem].currentState.popUntil((route) => route.isFirst);
+    } else {
+      setState(() => _currentTab = tabItem);
+    }
   }
 
   @override
@@ -26,10 +29,10 @@ class AppState extends State<App> {
     return WillPopScope(
       onWillPop: () async {
         final isFirstRouteInCurrentTab =
-            !await navigatorKeys[currentTab].currentState.maybePop();
+            !await _navigatorKeys[_currentTab].currentState.maybePop();
         if (isFirstRouteInCurrentTab) {
           // if not on the 'main' tab
-          if (currentTab != TabItem.red) {
+          if (_currentTab != TabItem.red) {
             // select 'main' tab
             _selectTab(TabItem.red);
             // back button handled by app
@@ -46,7 +49,7 @@ class AppState extends State<App> {
           _buildOffstageNavigator(TabItem.blue),
         ]),
         bottomNavigationBar: BottomNavigation(
-          currentTab: currentTab,
+          currentTab: _currentTab,
           onSelectTab: _selectTab,
         ),
       ),
@@ -55,9 +58,9 @@ class AppState extends State<App> {
 
   Widget _buildOffstageNavigator(TabItem tabItem) {
     return Offstage(
-      offstage: currentTab != tabItem,
+      offstage: _currentTab != tabItem,
       child: TabNavigator(
-        navigatorKey: navigatorKeys[tabItem],
+        navigatorKey: _navigatorKeys[tabItem],
         tabItem: tabItem,
       ),
     );
