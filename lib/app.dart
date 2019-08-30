@@ -9,9 +9,8 @@ class App extends StatefulWidget {
 
 class AppState extends State<App> {
   TabItem _currentTab = TabItem.red;
-  TabItem currentTab = TabItem.red;
-  int selectedIndex = TabItem.red.index;
-  Map<TabItem, GlobalKey<NavigatorState>> navigatorKeys = {
+  int _selectedIndex = TabItem.red.index;
+  Map<TabItem, GlobalKey<NavigatorState>> _navigatorKeys = {
     TabItem.red: GlobalKey<NavigatorState>(),
     TabItem.green: GlobalKey<NavigatorState>(),
     TabItem.blue: GlobalKey<NavigatorState>(),
@@ -23,8 +22,8 @@ class AppState extends State<App> {
       _navigatorKeys[tabItem].currentState.popUntil((route) => route.isFirst);
     } else {
       setState(() {
-        currentTab = tabItem;
-        selectedIndex = tabItem.index;
+        _currentTab = tabItem;
+        _selectedIndex = tabItem.index;
       });
     }
   }
@@ -56,7 +55,7 @@ class AppState extends State<App> {
         bottomNavigationBar: BottomNavigation(
           currentTab: _currentTab,
           onSelectTab: _selectTab,
-          selectedIndex: selectedIndex
+          selectedIndex: _selectedIndex,
         ),
       ),
     );
