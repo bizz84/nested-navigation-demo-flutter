@@ -28,14 +28,14 @@ class TabNavigator extends StatelessWidget {
       {int materialIndex: 500}) {
     return {
       TabNavigatorRoutes.root: (context) => ColorsListPage(
-            color: TabHelper.color(tabItem),
-            title: TabHelper.description(tabItem),
+            color: activeTabColor[tabItem],
+            title: tabName[tabItem],
             onPush: (materialIndex) =>
                 _push(context, materialIndex: materialIndex),
           ),
       TabNavigatorRoutes.detail: (context) => ColorDetailPage(
-            color: TabHelper.color(tabItem),
-            title: TabHelper.description(tabItem),
+            color: activeTabColor[tabItem],
+            title: tabName[tabItem],
             materialIndex: materialIndex,
           ),
     };
@@ -43,15 +43,15 @@ class TabNavigator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var routeBuilders = _routeBuilders(context);
-
+    final routeBuilders = _routeBuilders(context);
     return Navigator(
-        key: navigatorKey,
-        initialRoute: TabNavigatorRoutes.root,
-        onGenerateRoute: (routeSettings) {
-          return MaterialPageRoute(
-            builder: (context) => routeBuilders[routeSettings.name](context),
-          );
-        });
+      key: navigatorKey,
+      initialRoute: TabNavigatorRoutes.root,
+      onGenerateRoute: (routeSettings) {
+        return MaterialPageRoute(
+          builder: (context) => routeBuilders[routeSettings.name](context),
+        );
+      },
+    );
   }
 }

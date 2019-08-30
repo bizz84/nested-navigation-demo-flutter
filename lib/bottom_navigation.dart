@@ -1,55 +1,24 @@
-
 import 'package:flutter/material.dart';
 
 enum TabItem { red, green, blue }
 
-class TabHelper {
-  static TabItem item({int index}) {
-    switch (index) {
-      case 0:
-        return TabItem.red;
-      case 1:
-        return TabItem.green;
-      case 2:
-        return TabItem.blue;
-    }
-    return TabItem.red;
-  }
+Map<TabItem, String> tabName = {
+  TabItem.red: 'red',
+  TabItem.green: 'green',
+  TabItem.blue: 'blue',
+};
 
-  static String description(TabItem tabItem) {
-    switch (tabItem) {
-      case TabItem.red:
-        return 'red';
-      case TabItem.green:
-        return 'green';
-      case TabItem.blue:
-        return 'blue';
-    }
-    return '';
-  }
-  static IconData icon(TabItem tabItem) {
-    return Icons.layers;
-  }
-
-  static MaterialColor color(TabItem tabItem) {
-    switch (tabItem) {
-      case TabItem.red:
-        return Colors.red;
-      case TabItem.green:
-        return Colors.green;
-      case TabItem.blue:
-        return Colors.blue;
-    }
-    return Colors.grey;
-  }
-}
+Map<TabItem, MaterialColor> activeTabColor = {
+  TabItem.red: Colors.red,
+  TabItem.green: Colors.green,
+  TabItem.blue: Colors.blue,
+};
 
 class BottomNavigation extends StatelessWidget {
   BottomNavigation({this.currentTab, this.onSelectTab, this.selectedIndex});
   final TabItem currentTab;
   final int selectedIndex;
   final ValueChanged<TabItem> onSelectTab;
-
 
   @override
   Widget build(BuildContext context) {
@@ -61,16 +30,15 @@ class BottomNavigation extends StatelessWidget {
         _buildItem(tabItem: TabItem.blue),
       ],
       onTap: (index) => onSelectTab(
-        TabHelper.item(index: index),
+        TabItem.values[index],
       ),
       currentIndex: selectedIndex,
     );
   }
 
   BottomNavigationBarItem _buildItem({TabItem tabItem}) {
-
-    String text = TabHelper.description(tabItem);
-    IconData icon = TabHelper.icon(tabItem);
+    String text = tabName[tabItem];
+    IconData icon = Icons.layers;
     return BottomNavigationBarItem(
       icon: Icon(
         icon,
@@ -86,6 +54,6 @@ class BottomNavigation extends StatelessWidget {
   }
 
   Color _colorTabMatching({TabItem item}) {
-    return currentTab == item ? TabHelper.color(item) : Colors.grey;
+    return currentTab == item ? activeTabColor[item] : Colors.grey;
   }
 }
