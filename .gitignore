@@ -10,6 +10,7 @@
 .history
 .svn/
 
+
 # IntelliJ related
 *.iml
 *.ipr
@@ -92,3 +93,5 @@ unlinked_spec.ds
 # Firebase configuration files
 ios/Runner/GoogleService-Info.plist
 android/app/google-services.json
+
+ios/Flutter/flutter_export_environment.sh
