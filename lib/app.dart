@@ -32,32 +32,27 @@ class AppState extends State<App> {
       onWillPop: () async {
         if (Global.pageNavigatorKey.currentState.canPop()) {
           Global.pageNavigatorKey.currentState.pop();
-          print("return false");
+
           return false;
         }
 
         final isFirstRouteInCurrentTab =
             !await _navigatorKeys[_currentTab].currentState.maybePop();
-        String currentRoute = ModalRoute.of(context).settings.name;
-        print("current route name is " + currentRoute);
 
         if (isFirstRouteInCurrentTab) {
           if (_currentTab != TabItem.red) {
             _selectTab(TabItem.red);
             //* back button handled by app
-            print("return false");
+
             return false;
           }
         }
-
-        print("returned is " + isFirstRouteInCurrentTab.toString());
 
         return isFirstRouteInCurrentTab;
       },
       child: Navigator(
         key: Global.pageNavigatorKey,
         onGenerateRoute: (settings) {
-          print(settings.name);
           if (settings.name == '/other') {
             return MaterialPageRoute(
               builder: (context) => OtherPage(),
