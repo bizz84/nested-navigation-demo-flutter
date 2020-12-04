@@ -42,12 +42,7 @@ class BottomNavigation extends StatelessWidget {
         icon,
         color: _colorTabMatching(item: tabItem),
       ),
-      title: Text(
-        text,
-        style: TextStyle(
-          color: _colorTabMatching(item: tabItem),
-        ),
-      ),
+      label: text,
     );
   }
 
