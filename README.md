@@ -1,4 +1,4 @@
-# Multiple Navigators with BottomNavigationBar
+# Flutter BottomNavigationBar with Multiple Navigators
 
 This is the source code for my article:
 
