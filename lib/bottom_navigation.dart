@@ -15,7 +15,7 @@ Map<TabItem, MaterialColor> activeTabColor = {
 };
 
 class BottomNavigation extends StatelessWidget {
-  BottomNavigation({this.currentTab, this.onSelectTab});
+  BottomNavigation({@required this.currentTab, @required this.onSelectTab});
   final TabItem currentTab;
   final ValueChanged<TabItem> onSelectTab;
 
@@ -24,9 +24,9 @@ class BottomNavigation extends StatelessWidget {
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
       items: [
-        _buildItem(tabItem: TabItem.red),
-        _buildItem(tabItem: TabItem.green),
-        _buildItem(tabItem: TabItem.blue),
+        _buildItem(TabItem.red),
+        _buildItem(TabItem.green),
+        _buildItem(TabItem.blue),
       ],
       onTap: (index) => onSelectTab(
         TabItem.values[index],
@@ -34,15 +34,13 @@ class BottomNavigation extends StatelessWidget {
     );
   }
 
-  BottomNavigationBarItem _buildItem({TabItem tabItem}) {
-    String text = tabName[tabItem];
-    IconData icon = Icons.layers;
+  BottomNavigationBarItem _buildItem(TabItem tabItem) {
     return BottomNavigationBarItem(
       icon: Icon(
-        icon,
+        Icons.layers,
         color: _colorTabMatching(item: tabItem),
       ),
-      label: text,
+      label: tabName[tabItem],
     );
   }
 
