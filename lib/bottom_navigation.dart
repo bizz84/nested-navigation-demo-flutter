@@ -1,18 +1,5 @@
 import 'package:flutter/material.dart';
-
-enum TabItem { red, green, blue }
-
-Map<TabItem, String> tabName = {
-  TabItem.red: 'red',
-  TabItem.green: 'green',
-  TabItem.blue: 'blue',
-};
-
-Map<TabItem, MaterialColor> activeTabColor = {
-  TabItem.red: Colors.red,
-  TabItem.green: Colors.green,
-  TabItem.blue: Colors.blue,
-};
+import 'package:nested_navigation_demo_flutter/tab_item.dart';
 
 class BottomNavigation extends StatelessWidget {
   BottomNavigation({@required this.currentTab, @required this.onSelectTab});
@@ -38,13 +25,13 @@ class BottomNavigation extends StatelessWidget {
     return BottomNavigationBarItem(
       icon: Icon(
         Icons.layers,
-        color: _colorTabMatching(item: tabItem),
+        color: _colorTabMatching(tabItem),
       ),
       label: tabName[tabItem],
     );
   }
 
-  Color _colorTabMatching({TabItem item}) {
+  Color _colorTabMatching(TabItem item) {
     return currentTab == item ? activeTabColor[item] : Colors.grey;
   }
 }
