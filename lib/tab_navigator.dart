@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nested_navigation_demo_flutter/bottom_navigation.dart';
 import 'package:nested_navigation_demo_flutter/color_detail_page.dart';
 import 'package:nested_navigation_demo_flutter/colors_list_page.dart';
 import 'package:nested_navigation_demo_flutter/tab_item.dart';
@@ -10,8 +9,8 @@ class TabNavigatorRoutes {
 }
 
 class TabNavigator extends StatelessWidget {
-  TabNavigator({this.navigatorKey, this.tabItem});
-  final GlobalKey<NavigatorState> navigatorKey;
+  TabNavigator({required this.navigatorKey, required this.tabItem});
+  final GlobalKey<NavigatorState>? navigatorKey;
   final TabItem tabItem;
 
   void _push(BuildContext context, {int materialIndex: 500}) {
@@ -20,7 +19,8 @@ class TabNavigator extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => routeBuilders[TabNavigatorRoutes.detail](context),
+        builder: (context) =>
+            routeBuilders[TabNavigatorRoutes.detail]!(context),
       ),
     );
   }
@@ -29,14 +29,14 @@ class TabNavigator extends StatelessWidget {
       {int materialIndex: 500}) {
     return {
       TabNavigatorRoutes.root: (context) => ColorsListPage(
-            color: activeTabColor[tabItem],
-            title: tabName[tabItem],
+            color: activeTabColor[tabItem]!,
+            title: tabName[tabItem]!,
             onPush: (materialIndex) =>
                 _push(context, materialIndex: materialIndex),
           ),
       TabNavigatorRoutes.detail: (context) => ColorDetailPage(
-            color: activeTabColor[tabItem],
-            title: tabName[tabItem],
+            color: activeTabColor[tabItem]!,
+            title: tabName[tabItem]!,
             materialIndex: materialIndex,
           ),
     };
@@ -50,7 +50,7 @@ class TabNavigator extends StatelessWidget {
       initialRoute: TabNavigatorRoutes.root,
       onGenerateRoute: (routeSettings) {
         return MaterialPageRoute(
-          builder: (context) => routeBuilders[routeSettings.name](context),
+          builder: (context) => routeBuilders[routeSettings.name!]!(context),
         );
       },
     );
