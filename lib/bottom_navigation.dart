@@ -18,6 +18,7 @@ class BottomNavigation extends StatelessWidget {
       onTap: (index) => onSelectTab(
         TabItem.values[index],
       ),
+      currentIndex: currentTab.index,
     );
   }
 
