@@ -44,7 +44,7 @@ class ColorsListPage extends StatelessWidget {
             child: ListTile(
               title: Text('$materialIndex', style: TextStyle(fontSize: 24.0)),
               trailing: Icon(Icons.chevron_right),
-              onTap: () => onPush!(materialIndex),
+              onTap: () => onPush?.call(materialIndex),
             ),
           );
         });
