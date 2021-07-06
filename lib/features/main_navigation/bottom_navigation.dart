@@ -8,32 +8,29 @@ class BottomNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final selectedItemColor = Theme.of(context).primaryColor;
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
       items: [
-        _buildItem(TabItem.red),
-        _buildItem(TabItem.green),
-        _buildItem(TabItem.blue),
+        _buildItem(TabItem.home, selectedItemColor),
+        _buildItem(TabItem.payments, selectedItemColor),
+        _buildItem(TabItem.help, selectedItemColor),
       ],
       onTap: (index) => onSelectTab(
         TabItem.values[index],
       ),
       currentIndex: currentTab.index,
-      selectedItemColor: activeTabColor[currentTab]!,
+      selectedItemColor: selectedItemColor,
     );
   }
 
-  BottomNavigationBarItem _buildItem(TabItem tabItem) {
+  BottomNavigationBarItem _buildItem(TabItem tabItem, Color selectedItemColor) {
     return BottomNavigationBarItem(
       icon: Icon(
-        Icons.layers,
-        color: _colorTabMatching(tabItem),
+        tabIcon[tabItem],
+        color: currentTab == tabItem ? selectedItemColor : Colors.grey,
       ),
       label: tabName[tabItem],
     );
-  }
-
-  Color _colorTabMatching(TabItem item) {
-    return currentTab == item ? activeTabColor[item]! : Colors.grey;
   }
 }
