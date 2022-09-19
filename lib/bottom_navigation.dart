@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:nested_navigation_demo_flutter/tab_item.dart';
 
 class BottomNavigation extends StatelessWidget {
-  BottomNavigation({required this.currentTab, required this.onSelectTab});
+  const BottomNavigation(
+      {super.key, required this.currentTab, required this.onSelectTab});
   final TabItem currentTab;
   final ValueChanged<TabItem> onSelectTab;
 
@@ -19,7 +20,7 @@ class BottomNavigation extends StatelessWidget {
         TabItem.values[index],
       ),
       currentIndex: currentTab.index,
-      selectedItemColor: activeTabColor[currentTab]!,
+      selectedItemColor: currentTab.color,
     );
   }
 
@@ -29,11 +30,11 @@ class BottomNavigation extends StatelessWidget {
         Icons.layers,
         color: _colorTabMatching(tabItem),
       ),
-      label: tabName[tabItem],
+      label: tabItem.name,
     );
   }
 
   Color _colorTabMatching(TabItem item) {
-    return currentTab == item ? activeTabColor[item]! : Colors.grey;
+    return currentTab == item ? item.color : Colors.grey;
   }
 }

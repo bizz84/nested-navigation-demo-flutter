@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ColorsListPage extends StatelessWidget {
-  ColorsListPage({required this.color, required this.title, this.onPush});
+  ColorsListPage(
+      {super.key, required this.color, required this.title, this.onPush});
   final MaterialColor color;
   final String title;
   final ValueChanged<int>? onPush;
@@ -42,8 +43,9 @@ class ColorsListPage extends StatelessWidget {
           return Container(
             color: color[materialIndex],
             child: ListTile(
-              title: Text('$materialIndex', style: TextStyle(fontSize: 24.0)),
-              trailing: Icon(Icons.chevron_right),
+              title: Text('$materialIndex',
+                  style: const TextStyle(fontSize: 24.0)),
+              trailing: const Icon(Icons.chevron_right),
               onTap: () => onPush?.call(materialIndex),
             ),
           );

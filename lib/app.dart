@@ -4,6 +4,8 @@ import 'package:nested_navigation_demo_flutter/tab_item.dart';
 import 'package:nested_navigation_demo_flutter/tab_navigator.dart';
 
 class App extends StatefulWidget {
+  const App({super.key});
+
   @override
   State<StatefulWidget> createState() => AppState();
 }

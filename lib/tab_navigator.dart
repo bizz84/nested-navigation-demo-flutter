@@ -9,11 +9,12 @@ class TabNavigatorRoutes {
 }
 
 class TabNavigator extends StatelessWidget {
-  TabNavigator({required this.navigatorKey, required this.tabItem});
+  const TabNavigator(
+      {super.key, required this.navigatorKey, required this.tabItem});
   final GlobalKey<NavigatorState>? navigatorKey;
   final TabItem tabItem;
 
-  void _push(BuildContext context, {int materialIndex: 500}) {
+  void _push(BuildContext context, {int materialIndex = 500}) {
     var routeBuilders = _routeBuilders(context, materialIndex: materialIndex);
 
     Navigator.push(
@@ -26,17 +27,17 @@ class TabNavigator extends StatelessWidget {
   }
 
   Map<String, WidgetBuilder> _routeBuilders(BuildContext context,
-      {int materialIndex: 500}) {
+      {int materialIndex = 500}) {
     return {
       TabNavigatorRoutes.root: (context) => ColorsListPage(
-            color: activeTabColor[tabItem]!,
-            title: tabName[tabItem]!,
+            color: tabItem.color,
+            title: tabItem.name,
             onPush: (materialIndex) =>
                 _push(context, materialIndex: materialIndex),
           ),
       TabNavigatorRoutes.detail: (context) => ColorDetailPage(
-            color: activeTabColor[tabItem]!,
-            title: tabName[tabItem]!,
+            color: tabItem.color,
+            title: tabItem.name,
             materialIndex: materialIndex,
           ),
     };
